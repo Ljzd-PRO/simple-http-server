@@ -12,7 +12,7 @@ jobs:
     name: Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -27,7 +27,7 @@ jobs:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -45,7 +45,7 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -86,7 +86,7 @@ jobs:
       PATH_BINARY: ${{ github.workspace }}/target/${{ matrix.TARGET }}/release/simple-http-server${{ matrix.EXTENSION }}${{ endsWith(matrix.target, '-msvc') && '.exe' || '' }}
       OPENSSL_STATIC: 1
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -102,13 +102,13 @@ jobs:
           use-cross: true
           command: build
           args: --release --no-default-features --bin simple-http-server --locked --target=${{ matrix.TARGET }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}-simple-http-server${{ env.BINARY_EXTENSION }}
           path: ${{ env.PATH_BINARY }}
       - name: Evaluate shasum
         run: echo -n $(shasum -ba 256 ${{ env.PATH_BINARY }} | cut -d " " -f 1) > ${{ env.PATH_BINARY }}.sha256
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}-simple-http-server.sha256
           path: ${{ env.PATH_BINARY }}.sha256
