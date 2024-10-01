@@ -82,7 +82,7 @@ jobs:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
           - os: windows-latest
-            target: i686-pc-windows-gnu
+            target: i686-pc-windows-msvc
     env:
       BINARY_EXTENSION: ${{ endsWith(matrix.target, '-msvc') && '.exe' || '' }}
       PATH_BINARY: ${{ github.workspace }}/target/${{ matrix.TARGET }}/release/simple-http-server${{ matrix.EXTENSION }}${{ endsWith(matrix.target, '-msvc') && '.exe' || '' }}
